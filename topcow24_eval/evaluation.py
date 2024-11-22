@@ -25,7 +25,7 @@ class TopCoWEvaluation(MySegmentationEvaluation):
         self,
         track: TRACK,
         task: TASK,
-        expected_num_cases: int,
+        # expected_num_cases: int,
         need_crop: bool,
         predictions_path: Optional[PathLike] = None,
         ground_truth_path: Optional[PathLike] = None,
@@ -35,7 +35,7 @@ class TopCoWEvaluation(MySegmentationEvaluation):
         super().__init__(
             track,
             task,
-            expected_num_cases,
+            # expected_num_cases,
             need_crop,
             predictions_path,
             ground_truth_path,
@@ -127,9 +127,9 @@ class TopCoWEvaluation(MySegmentationEvaluation):
 
 
 if __name__ == "__main__":
-    from topcow24_eval.configs import expected_num_cases, need_crop, task, track
+    from topcow24_eval.configs import need_crop, task, track
 
-    evalRun = TopCoWEvaluation(track, task, expected_num_cases, need_crop=need_crop)
+    evalRun = TopCoWEvaluation(track, task, need_crop=need_crop)
 
     evalRun.evaluate()
 

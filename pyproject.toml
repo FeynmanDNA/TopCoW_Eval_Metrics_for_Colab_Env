@@ -6,12 +6,7 @@ readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
     "evalutils==0.4.2",
-    "nibabel==5.1.0",
-    "numpy==1.25.2",
-    "pandas==2.0.3",
-    "pyyaml",
-    "scikit-image==0.21.0",
-    "SimpleITK==2.2.1",
+    "pyyaml"
 ]
 
 [project.optional-dependencies]
@@ -26,4 +21,14 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["topcow24_eval"]
+# specify the packages to be included manually
+packages = [
+    "topcow24_eval",
+    "topcow24_eval.aggregate",
+    "topcow24_eval.metrics.box_metrics",
+    "topcow24_eval.metrics.edg_metrics",
+    "topcow24_eval.metrics.seg_metrics",
+    "topcow24_eval.metrics.seg_metrics.graph_classification",
+    "topcow24_eval.metrics.seg_metrics.topology_matching",
+    "topcow24_eval.utils"
+]

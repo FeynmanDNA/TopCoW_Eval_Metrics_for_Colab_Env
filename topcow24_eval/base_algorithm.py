@@ -9,7 +9,6 @@ from typing import Optional
 from evalutils import ClassificationEvaluation
 from evalutils.exceptions import FileLoaderError
 from evalutils.io import FileLoader, SimpleITKLoader
-from evalutils.validators import NumberOfCasesValidator
 from pandas import DataFrame, concat, merge, set_option
 
 from topcow24_eval.aggregate.aggregate_all_detection_dicts import (
@@ -18,7 +17,7 @@ from topcow24_eval.aggregate.aggregate_all_detection_dicts import (
 from topcow24_eval.aggregate.aggregate_all_graph_dicts import aggregate_all_graph_dicts
 from topcow24_eval.aggregate.aggregate_all_topo_dicts import aggregate_all_topo_dicts
 from topcow24_eval.constants import SLUG_OUTPUT, TASK, TRACK
-from topcow24_eval.for_gc_docker import is_docker, load_predictions_json
+from topcow24_eval.for_gc_docker import load_predictions_json
 from topcow24_eval.utils.tree_view_dir import DisplayablePath
 
 logger = logging.getLogger(__name__)
@@ -40,7 +39,7 @@ class MySegmentationEvaluation(ClassificationEvaluation):
         self,
         track: TRACK,
         task: TASK,
-        expected_num_cases: int,
+        # expected_num_cases: int,
         need_crop: bool,
         predictions_path: Optional[PathLike] = None,
         ground_truth_path: Optional[PathLike] = None,
@@ -54,7 +53,7 @@ class MySegmentationEvaluation(ClassificationEvaluation):
             self.need_crop = False
         else:
             self.need_crop = need_crop
-        self.execute_in_docker = is_docker()
+        self.execute_in_docker = False  # pretend Colab is not docker env
 
         print(f"[init] track = {self.track.value}")
         print(f"[init] task = {self.task.value}")
@@ -194,7 +193,7 @@ class MySegmentationEvaluation(ClassificationEvaluation):
             validators=(
                 # we use the NumberOfCasesValidator to check that the correct number
                 # of cases has been submitted by the challenge participant
-                NumberOfCasesValidator(num_cases=expected_num_cases),
+                # NumberOfCasesValidator(num_cases=expected_num_cases),
                 # NOTE: We do not use UniqueIndicesValidator
                 # since this might throw an error due to uuid provided by GC
                 # NOTE: also do not use UniqueImagesValidator
@@ -206,7 +205,7 @@ class MySegmentationEvaluation(ClassificationEvaluation):
             self._roi_path = roi_path
             self._roi_cases = DataFrame()
             self._roi_validators = (
-                NumberOfCasesValidator(num_cases=expected_num_cases),
+                # NumberOfCasesValidator(num_cases=expected_num_cases),
             )
 
         print("Path at terminal when executing this file")
